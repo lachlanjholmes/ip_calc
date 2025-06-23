@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Visual Subnet Calculator</title>
+        <script src="lib/script.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="lib/style.css" />
+    </head>
+    <body>
+        <table width="100%">
+            <tr valign="top">
+                <td>
+                    <h1>Visual Subnet Calculator</h1>
+                    <p>Enter the network you wish to subnet:</p>
+                    <form name="calc" onsubmit="updateNetwork(); return false;">
+                        <table cellspacing="0">
+                            <tr>
+                                <td class="label">Network Address</td>
+                                <td class="label">Mask bits</td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" name="network" size="15" maxlength="15" value="192.168.0.0" /></td>
+                                <td>/<input type="text" name="netbits" size="2" maxlength="2" value="16" /></td>
+                                <td>
+                                    <input type="submit" value="Update" />
+                                    <input type="button" value="Reset" onclick="if (confirm('This will reset all subnet divisions you have made. Proceed?')) startOver();" />
+                                </td>
+                            </tr>
+                        </table>
+                        <p>
+                            Show columns: 
+                            <input type="checkbox" id="cb_subnet" checked onchange="toggleColumn(this)" /><label for="cb_subnet">Subnet address</label>
+                            <input type="checkbox" id="cb_netmask" checked onchange="toggleColumn(this)" /><label for="cb_netmask">Netmask</label> 
+                            <input type="checkbox" id="cb_range" checked onchange="toggleColumn(this)" /><label for="cb_range">Range of addresses</label> 
+                            <input type="checkbox" id="cb_useable" checked onchange="toggleColumn(this)" /><label for="cb_useable">Useable IPs</label>
+                            <input type="checkbox" id="cb_hosts" checked onchange="toggleColumn(this)" /><label for="cb_hosts">Hosts</label>
+                            <input type="checkbox" id="cb_cloudformation" checked onchange="toggleColumn(this)" /><label for="cb_cloudformation">AWS CloudFormation</label>
+                            <input type="checkbox" id="cb_terraform" checked onchange="toggleColumn(this)" /><label for="cb_terraform">Terraform</label>
+                            <input type="checkbox" id="cb_comments" checked onchange="toggleColumn(this)" /><label for="cb_comments">Comments</label>
+                            <input type="checkbox" id="cb_divide" checked onchange="toggleColumn(this)" /><label for="cb_divide">Divide</label>
+                            <input type="checkbox" id="cb_join" checked onchange="toggleColumn(this)" /><label for="cb_join">Join</label>
+                        </p>
+                    </form>
+                    <p>
+                        Click below to split and join subnets.<br />
+                        If you wish to save this subnetting for later, bookmark <a href="subnets.html" id="saveLink">this hyperlink</a>.
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <br />
+        <hr noshade color="black" size="1" />
+        <br />
+        <table class="calc" cellspacing="0" cellpadding="2">
+            <colgroup>
+                <col id="col_subnet" />
+                <col id="col_netmask" />
+                <col id="col_range" />
+                <col id="col_useable" />
+                <col id="col_hosts" />
+                <col id="col_cloudformation" />
+                <col id="col_terraform" />
+                <col id="col_comments" />
+                <col id="col_divide" />
+                <col id="col_join" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <td class="col_subnet">Subnet address</td>
+                    <td class="col_netmask">Netmask</td>
+                    <td class="col_range">Range of addresses</td>
+                    <td class="col_useable">Useable IPs</td>
+                    <td class="col_hosts">Hosts</td>
+                    <td class="col_cloudformation">AWS CloudFormation</td>
+                    <td class="col_terraform">Terraform</td>
+                    <td class="col_comments">Comments</td>
+                    <td class="col_divide">Divide</td>
+                    <td class="col_join" id="joinHeader">Join</td>
+                </tr>
+            </thead>
+            <tbody id="calcbody">
+            </tbody>
+        </table>
+        <footer>
+          <p>Source code: <a href="https://github.com/lachlanjholmes/ip_calc">GitHub</a></p>
+        </footer>
+    </body>
+</html>
