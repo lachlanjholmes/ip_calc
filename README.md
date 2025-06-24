@@ -31,7 +31,7 @@ A web-based, interactive subnet calculator for visualizing and managing IPv4 sub
 
 - Original creator: [davidc](https://github.com/davidc)
 - Forked from: [davidc/subnets](https://github.com/davidc/subnets)
-- Comments column by: [user1](https://github.com/user1)
+- Comments column by: [BlackthornYugen](https://github.com/BlackthornYugen)
 
 ## License
 
