@@ -23,7 +23,7 @@ A web-based, interactive subnet calculator for visualizing and managing IPv4 sub
 
 ## Development
 
-- All logic is in `lib/script.js` (well-commented)
+- All logic is in `lib/script.js`
 - Styles are in `lib/style.css`
 - No build step or dependencies required
 
