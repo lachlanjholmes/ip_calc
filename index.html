@@ -45,7 +45,7 @@
                         Click below to split and join subnets.<br />
                         If you wish to save this subnetting for later, bookmark <a href="subnets.html" id="saveLink">this hyperlink</a>.
                     </p>
-                </td>
+                    </td>
             </tr>
         </table>
         <br />
@@ -81,6 +81,25 @@
             <tbody id="calcbody">
             </tbody>
         </table>
+        <br />
+        <hr noshade color="black" size="1" />
+        <h2>Export IaC</h2>
+        <form name="exportForm">
+            <p>
+                <label for="iacType">IaC Type:</label>
+                <select id="iacType" name="iacType" onchange="handleIacTypeChange()">
+                    <option value="cloudformation">AWS CloudFormation</option>
+                    <option value="terraform">Terraform</option>
+                </select>
+                <label for="outputFormat">Format:</label>
+                <select id="outputFormat" name="outputFormat">
+                    <option value="yaml">YAML</option>
+                    <option value="json">JSON</option>
+                </select>
+                <input type="button" value="Generate IaC" onclick="generateIac()" />
+            </p>
+            <textarea id="iacOutput" rows="20" cols="80" readonly></textarea>
+        </form>
         <footer>
           <p>Source code: <a href="https://github.com/lachlanjholmes/ip_calc">GitHub</a></p>
         </footer>
