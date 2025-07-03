@@ -98,10 +98,11 @@
                                 <option value="gcp">GCP</option>
                             </select>
                 <label for="outputFormat">Format:</label>
-                <select id="outputFormat" name="outputFormat">
-                    <option value="yaml">YAML</option>
-                    <option value="json">JSON</option>
-                </select>
+                            <select id="outputFormat" name="outputFormat">
+                                <option value="yaml">YAML</option>
+                                <option value="json">JSON</option>
+                            </select>
+                            <input type="checkbox" id="hardcodeCidr" onchange="generateIac()" /><label for="hardcodeCidr">Hardcode CIDR</label>
                 <input type="button" value="Generate IaC" onclick="generateIac()" />
             </p>
             <textarea id="iacOutput" rows="20" cols="80" readonly></textarea>
