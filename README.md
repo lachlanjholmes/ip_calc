@@ -25,7 +25,35 @@ A web-based, interactive subnet calculator for visualizing and managing IPv4 sub
 
 - All logic is in `lib/script.js`
 - Styles are in `lib/style.css`
-- No build step or dependencies required
+- No build step or dependencies required (for core functionality)
+
+### Linting and Formatting
+
+This project uses ESLint for linting JavaScript and Prettier for code formatting.
+
+1.  **Install dependencies:**
+
+    ```bash
+    npm install
+    ```
+
+2.  **Run the linter (check for errors):**
+
+    ```bash
+    npm run lint
+    ```
+
+3.  **Fix linting errors automatically:**
+
+    ```bash
+    npm run lint:fix
+    ```
+
+4.  **Format the code:**
+
+    ```bash
+    npm run format
+    ```
 
 ## Credits
 
