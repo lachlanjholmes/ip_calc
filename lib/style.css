@@ -6,7 +6,7 @@
     --display-hosts: table-cell;
     --display-cloudformation: table-cell;
     --display-terraform: table-cell;
-    --display-comments: none;
+    --display-comments: table-cell;
     --display-divide: table-cell;
     --display-join: table-cell;
 }
