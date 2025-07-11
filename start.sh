@@ -12,5 +12,5 @@ then
 fi
 
 $CONTAINER_CLI rm -f ip_calc
-$CONTAINER_CLI build -t ip_calc .
+$CONTAINER_CLI build --no-cache -t ip_calc .
 $CONTAINER_CLI run -d -p 8085:80 --name ip_calc ip_calc

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Parameter Validation - Visual Subnet Calculator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-case { margin: 20px 0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .test-case h3 { margin-top: 0; color: #333; }
+        .test-url { background: #f5f5f5; padding: 10px; font-family: monospace; word-break: break-all; margin: 10px 0; }
+        .test-button { background: #007cba; color: white; padding: 8px 15px; text-decoration: none; border-radius: 3px; display: inline-block; margin: 5px; }
+        .test-button:hover { background: #005a87; }
+        .description { color: #666; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <h1>URL Parameter Validation Test Cases</h1>
+    <p>These test cases verify that the URL parameter support works correctly for preserving column visibility and IaC settings.</p>
+
+    <div class="test-case">
+        <h3>Test 1: Basic Network with All Defaults</h3>
+        <div class="description">Standard network setup with all default settings</div>
+        <div class="test-url">?network=192.168.0.0&mask=16&division=1.0</div>
+        <a href="/?network=192.168.0.0&mask=16&division=1.0" class="test-button" target="_blank">Test Basic Network</a>
+    </div>
+
+    <div class="test-case">
+        <h3>Test 2: Custom Column Visibility</h3>
+        <div class="description">Hide CloudFormation and Terraform columns, show only essential ones</div>
+        <div class="test-url">?network=10.0.0.0&mask=8&division=1.0&columns={"subnet":true,"netmask":true,"range":true,"useable":true,"hosts":true,"cloudformation":false,"terraform":false,"comments":true,"divide":true,"join":true}</div>
+        <a href='/?network=10.0.0.0&mask=8&division=1.0&columns={"subnet":true,"netmask":true,"range":true,"useable":true,"hosts":true,"cloudformation":false,"terraform":false,"comments":true,"divide":true,"join":true}' class="test-button" target="_blank">Test Custom Columns</a>
+    </div>
+
+    <div class="test-case">
+        <h3>Test 3: Terraform with Azure Settings</h3>
+        <div class="description">Terraform IaC type with Azure cloud provider and hardcoded CIDR</div>
+        <div class="test-url">?network=172.16.0.0&mask=12&division=1.0&iac={"iacType":"terraform","outputFormat":"yaml","cloudProvider":"azure","hardcodeCidr":true}</div>
+        <a href='/?network=172.16.0.0&mask=12&division=1.0&iac={"iacType":"terraform","outputFormat":"yaml","cloudProvider":"azure","hardcodeCidr":true}' class="test-button" target="_blank">Test Terraform + Azure</a>
+    </div>
+
+    <div class="test-case">
+        <h3>Test 4: CloudFormation JSON with Comments</h3>
+        <div class="description">CloudFormation in JSON format with subnet comments (verified working division)</div>
+        <div class="test-url">?network=10.1.0.0&mask=16&division=3.1&comments={"10.1.1.0/24":"Web Servers","10.1.2.0/24":"Database Servers","10.1.0.0/17":"Upper Section","10.1.128.0/17":"Lower Section"}&iac={"iacType":"cloudformation","outputFormat":"json","cloudProvider":"aws","hardcodeCidr":false}</div>
+        <a href='/?network=10.1.0.0&mask=16&division=3.1&comments={"10.1.1.0/24":"Web Servers","10.1.2.0/24":"Database Servers","10.1.0.0/17":"Upper Section","10.1.128.0/17":"Lower Section"}&iac={"iacType":"cloudformation","outputFormat":"json","cloudProvider":"aws","hardcodeCidr":false}' class="test-button" target="_blank">Test CF JSON + Comments</a>
+    </div>
+
+    <div class="test-case">
+        <h3>Test 5: Minimal View Configuration</h3>
+        <div class="description">Show only subnet, range, and hosts columns for simplified view</div>
+        <div class="test-url">?network=203.0.113.0&mask=24&division=1.0&columns={"subnet":true,"netmask":false,"range":true,"useable":false,"hosts":true,"cloudformation":false,"terraform":false,"comments":false,"divide":false,"join":false}</div>
+        <a href='/?network=203.0.113.0&mask=24&division=1.0&columns={"subnet":true,"netmask":false,"range":true,"useable":false,"hosts":true,"cloudformation":false,"terraform":false,"comments":false,"divide":false,"join":false}' class="test-button" target="_blank">Test Minimal View</a>
+    </div>
+
+    <div class="test-case">
+        <h3>Test 6: Complex Multi-Region Architecture with GCP Terraform</h3>
+        <div class="description">Complex multi-region subnet design with 9 commented subnets across 3 regions (Public, App, Database tiers), custom column visibility, and Terraform for GCP</div>
+        <div class="test-url">?network=192.168.0.0&mask=16&division=23.f42331&comments={"192.168.0.0/20":"Region 1 Public","192.168.32.0/20":"Region 3 Public","192.168.16.0/20":"Region 2 Public","192.168.96.0/19":"Region 2 App","192.168.128.0/19":"Region 3 App","192.168.192.0/20":"Region 1 Database","192.168.208.0/20":"Region 2 Database","192.168.224.0/20":"Region 3 Database","192.168.64.0/19":"Region 1 App"}&columns={"subnet":true,"netmask":true,"range":true,"useable":true,"hosts":true,"cloudformation":false,"terraform":true,"comments":true,"divide":true,"join":true}&iac={"iacType":"terraform","outputFormat":"yaml","cloudProvider":"gcp","hardcodeCidr":false}</div>
+        <a href='/?network=192.168.0.0&mask=16&division=23.f42331&comments={"192.168.0.0/20":"Region 1 Public","192.168.32.0/20":"Region 3 Public","192.168.16.0/20":"Region 2 Public","192.168.96.0/19":"Region 2 App","192.168.128.0/19":"Region 3 App","192.168.192.0/20":"Region 1 Database","192.168.208.0/20":"Region 2 Database","192.168.224.0/20":"Region 3 Database","192.168.64.0/19":"Region 1 App"}&columns={"subnet":true,"netmask":true,"range":true,"useable":true,"hosts":true,"cloudformation":false,"terraform":true,"comments":true,"divide":true,"join":true}&iac={"iacType":"terraform","outputFormat":"yaml","cloudProvider":"gcp","hardcodeCidr":false}' class="test-button" target="_blank">Test Complex Multi-Region</a>
+    </div>
+
+    <div class="test-case">
+        <h3>Test 7: Error Handling - Invalid Network</h3>
+        <div class="description">Test graceful fallback with invalid network address</div>
+        <div class="test-url">?network=999.999.999.999&mask=16&division=1.0</div>
+        <a href="/?network=999.999.999.999&mask=16&division=1.0" class="test-button" target="_blank">Test Invalid Network</a>
+    </div>
+
+    <div class="test-case">
+        <h3>Test 8: Error Handling - Malformed JSON</h3>
+        <div class="description">Test graceful fallback with malformed column settings</div>
+        <div class="test-url">?network=10.0.0.0&mask=16&division=1.0&columns={malformed:json}</div>
+        <a href="/?network=10.0.0.0&mask=16&division=1.0&columns={malformed:json}" class="test-button" target="_blank">Test Malformed JSON</a>
+    </div>
+
+    <h2>Testing Instructions</h2>
+    <ol>
+        <li><strong>Click each test button</strong> to open the calculator with specific settings</li>
+        <li><strong>Verify the state</strong> - check that network, columns, and IaC settings are correctly restored</li>
+        <li><strong>Make changes</strong> - modify settings and observe that the bookmark link updates</li>
+        <li><strong>Test the bookmark</strong> - click the "this hyperlink" link to verify it preserves all current state</li>
+        <li><strong>Check browser console</strong> for any warnings about invalid parameters</li>
+        <li><strong>Special attention to Test 6</strong> - This demonstrates a complex multi-region architecture with 9 different subnet tiers across 3 regions, showcasing the calculator's ability to handle enterprise-level network designs</li>
+    </ol>
+
+    <h2>Expected Behavior</h2>
+    <ul>
+        <li>✅ All valid parameters should be restored correctly</li>
+        <li>✅ Invalid parameters should show console warnings but not break the calculator</li>
+        <li>✅ Bookmark link should update automatically when settings change</li>
+        <li>✅ URLs should be properly encoded and decodable</li>
+        <li>✅ Error cases should gracefully fall back to defaults</li>
+    </ul>
+
+    <p><a href="/" class="test-button">← Back to Calculator</a></p>
+</body>
+</html>

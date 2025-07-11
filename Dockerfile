@@ -5,6 +5,9 @@ FROM nginx:alpine
 # /usr/share/nginx/html is the default document root for Nginx in this image
 COPY index.html /usr/share/nginx/html/index.html
 
+# Copy test files
+COPY test-suite.html /usr/share/nginx/html/test-suite.html
+
 # Copy your lib directory (containing JS and CSS files) into the Nginx public directory
 # This ensures that your JavaScript and CSS files are accessible relative to index.html
 COPY lib/ /usr/share/nginx/html/lib/

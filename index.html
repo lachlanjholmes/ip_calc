@@ -164,17 +164,17 @@
                 <label for="cloudProvider" id="cloudProviderLabel" style="display: none"
                     >Cloud Provider:</label
                 >
-                <select id="cloudProvider" name="cloudProvider" style="display: none">
+                <select id="cloudProvider" name="cloudProvider" style="display: none" onchange="createBookmarkHyperlink()">
                     <option value="aws">AWS</option>
                     <option value="azure">Azure</option>
                     <option value="gcp">GCP</option>
                 </select>
                 <label for="outputFormat">Format:</label>
-                <select id="outputFormat" name="outputFormat">
+                <select id="outputFormat" name="outputFormat" onchange="createBookmarkHyperlink()">
                     <option value="yaml">YAML</option>
                     <option value="json">JSON</option>
                 </select>
-                <input type="checkbox" id="hardcodeCidr" onchange="generateIac()" /><label
+                <input type="checkbox" id="hardcodeCidr" onchange="generateIac(); createBookmarkHyperlink()" /><label
                     for="hardcodeCidr"
                     >Hardcode CIDR</label
                 >
