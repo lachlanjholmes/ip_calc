@@ -6,7 +6,7 @@ FROM nginx:alpine
 COPY index.html /usr/share/nginx/html/index.html
 
 # Copy test files
-COPY test-enhanced-urls.html /usr/share/nginx/html/test-enhanced-urls.html
+COPY test-suite.html /usr/share/nginx/html/test-suite.html
 
 # Copy your lib directory (containing JS and CSS files) into the Nginx public directory
 # This ensures that your JavaScript and CSS files are accessible relative to index.html
