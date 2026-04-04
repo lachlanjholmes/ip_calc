@@ -47,6 +47,61 @@ Copy this template for each work session:
 
 ## Log Entries
 
+### Phase 6: Accessibility + Semantic HTML (STORY-015 through STORY-023)
+
+**Date:** 2026-04-04
+**Status:** Completed
+
+**What was attempted:**
+
+- STORY-015: Replaced outer layout `<table>` with semantic HTML landmarks (`<header>`, `<main>`, `<section class="controls">`, `<section class="subnet-table">`, `<section class="iac-export">`, `<footer>`). The inner form table (Network Address/Mask bits inputs) was kept as it's a small functional grouping.
+- STORY-016: Converted all 10 data table header cells from `<td>` to `<th scope="col">`. Updated CSS to apply border styles to both `td` and `th`.
+- STORY-017: Added `<label>` elements with `for` attributes for Network Address and Mask bits inputs. Added `id="network"` and `id="netbits"` to the inputs. Replaced `<td class="label">` with `<td><label>`.
+- STORY-018: Added `aria-label` to comment textareas ("Comment for {subnet}/{mask}"), divide links ("Divide {subnet}/{mask}"), and join links ("Join subnets into /{mask}"). Added `aria-disabled="true"` to disabled divide spans and join links.
+- STORY-019: Added `:focus-visible` styles with `2px solid #0066cc` outline and `2px` offset for all interactive elements.
+- STORY-020: Changed disabled action color from `#dddddd` (1.3:1 contrast) to `#767676` (4.54:1 contrast, passes WCAG AA).
+- STORY-021: Added `<meta name="viewport" content="width=device-width, initial-scale=1">` to `<head>`.
+- STORY-022: Replaced both `<hr noshade color="black" size="1">` with `<hr class="divider">` and CSS `border-top: 1px solid black`.
+- STORY-023: Changed bookmark link text from "this hyperlink" to "bookmark this configuration".
+
+**What worked:**
+
+- All 9 accessibility stories completed cleanly with no conflicts
+- The semantic HTML conversion was straightforward — the outer layout table was purely presentational
+- Adding `aria-label` to dynamically created elements leveraged the STORY-011 decomposition (each sub-function handled its own accessibility attributes)
+- `createDivideCell` needed an `address` parameter added for the aria-label, which was a clean signature change
+
+**What failed:**
+
+- Minor text duplication: "bookmark bookmark this configuration" — caught and fixed during review by adjusting the surrounding text to remove the redundant "bookmark" word.
+
+**Lessons learned:**
+
+- When changing link text, check the surrounding sentence to avoid duplication
+- The STORY-011 decomposition from Phase 5 paid off here — adding accessibility attributes to each cell type was a targeted change in the right sub-function
+- The `.label` CSS class was orphaned when we replaced `<td class="label">` with `<td><label>` — added a new selector for form labels to preserve the small font size
+
+**Files changed:**
+
+- `index.html` — Replaced layout table with semantic landmarks, converted `<td>` headers to `<th scope="col">`, added `<label>` elements, added viewport meta, replaced deprecated `<hr>` attributes, updated bookmark link text
+- `lib/script.js` — Added `aria-label` and `aria-disabled` attributes to `createCommentCell`, `createDivideCell`, `createJoinCells`; added `address` parameter to `createDivideCell`
+- `lib/style.css` — Added `hr.divider` styles, `:focus-visible` styles, updated `.calc td` to `.calc td, .calc th`, changed `.disabledAction` color to `#767676`, added form label selector
+- `BACKLOG.md` — Marked STORY-015 through STORY-023 as `[x]`
+
+**Verification:**
+
+- `npm run lint` passes with no errors
+- HTML structure uses semantic landmarks (`<header>`, `<main>`, `<section>`, `<footer>`)
+- No deprecated HTML attributes remain (`noshade`, `color`, `size` on `<hr>`, `width` on layout `<table>`)
+- All form inputs have associated `<label>` elements
+
+**Related items:**
+
+- STORY-015 + STORY-022 were completed together (layout table removal included deprecated `<hr>` replacement)
+- Phase 7 tests should verify that aria attributes are present on dynamically created elements
+
+---
+
 ### Phase 5: Code Quality Refactor (STORY-009 through STORY-014, CHORE-002)
 
 **Date:** 2026-04-04

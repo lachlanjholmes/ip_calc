@@ -483,7 +483,7 @@
 ### STORY-015: Replace layout tables with semantic HTML and flexbox/grid
 
 - **Priority:** High
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** The outer page structure uses `<table>` for layout (lines 10-121). Screen readers announce this as a data table. Replace with semantic elements and CSS layout.
 - **Acceptance Criteria:**
     - [ ] No `<table>` used for layout (only for the actual subnet data table)
@@ -509,7 +509,7 @@
 ### STORY-016: Convert data table headers from `<td>` to `<th>`
 
 - **Priority:** High
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** The subnet table header row uses `<td>` elements (lines 140-149) instead of `<th>`. Screen readers cannot announce column headers when navigating data cells.
 - **Acceptance Criteria:**
     - [ ] All header cells use `<th scope="col">`
@@ -524,7 +524,7 @@
 ### STORY-017: Add `<label>` elements for form inputs
 
 - **Priority:** High
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** The "Network Address" and "Mask bits" inputs (lines 23-38) have no `<label>` elements. The `<td class="label">` text is visual only.
 - **Acceptance Criteria:**
     - [ ] Each input has an associated `<label>` with a `for` attribute matching the input's `id`
@@ -540,7 +540,7 @@
 ### STORY-018: Add `aria-label` to dynamically generated elements
 
 - **Priority:** Medium
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** Comment textareas, Divide links, and Join links created in `createRow` have no accessible names. Screen readers announce them generically.
 - **Acceptance Criteria:**
     - [ ] Comment textareas have `aria-label="Comment for {subnet}/{mask}"`
@@ -558,7 +558,7 @@
 ### STORY-019: Add focus styles for keyboard navigation
 
 - **Priority:** Medium
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** No `:focus` or `:focus-visible` styles are defined. Keyboard users cannot see which element is focused.
 - **Acceptance Criteria:**
     - [ ] All interactive elements (links, buttons, inputs, textareas, checkboxes) have visible focus styles
@@ -579,7 +579,7 @@
 ### STORY-020: Fix disabled text contrast ratio
 
 - **Priority:** Medium
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** Disabled actions use color `#dddddd` (line 83 of style.css) which has ~1.3:1 contrast ratio against white. WCAG AA requires 4.5:1 for text.
 - **Acceptance Criteria:**
     - [ ] Disabled text color meets WCAG AA contrast ratio (4.5:1 minimum)
@@ -595,7 +595,7 @@
 ### STORY-021: Add viewport meta tag for mobile
 
 - **Priority:** Medium
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** No `<meta name="viewport">` tag exists. The page doesn't adapt to mobile screens and appears tiny on phones.
 - **Acceptance Criteria:**
     - [ ] Viewport meta tag added to `<head>`
@@ -609,7 +609,7 @@
 ### STORY-022: Replace deprecated HTML attributes
 
 - **Priority:** Low
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** `<hr noshade color="black" size="1">` on lines 123 and 155 uses deprecated HTML4 presentational attributes.
 - **Acceptance Criteria:**
     - [ ] Deprecated attributes removed
@@ -630,7 +630,7 @@
 ### STORY-023: Improve bookmark link text
 
 - **Priority:** Low
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** The bookmark link text is "this hyperlink" (line 117) which is meaningless when screen readers read a list of links.
 - **Acceptance Criteria:**
     - [ ] Link text is descriptive (e.g., "Bookmark this subnet configuration")
