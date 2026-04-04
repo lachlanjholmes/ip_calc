@@ -47,6 +47,57 @@ Copy this template for each work session:
 
 ## Log Entries
 
+### Phase 5: Code Quality Refactor (STORY-009 through STORY-014, CHORE-002)
+
+**Date:** 2026-04-04
+**Status:** Completed
+
+**What was attempted:**
+
+- STORY-009: Replaced magic tuple `[depth, numChildren, children]` arrays with named objects `{ depth, numChildren, children }` throughout the codebase. Also converted the `labels` flat array of triples (mask, numChildren, node) to an array of `{ mask, numChildren, node }` objects. Added `createNode()` factory function.
+- STORY-010: Extracted `createCell(row, className, textContent)` helper function. Replaced 6 repetitive createElement/classList.add/createTextNode/appendChild patterns (subnet, netmask, range, useable, hosts, terraform cells).
+- STORY-011: Decomposed 230-line `createRow` into 7 focused sub-functions: `createSubnetCells`, `createCloudFormationCell`, `createTerraformCell`, `createCommentCell`, `createDivideCell`, `createJoinCells`, plus the `createCell` helper from STORY-010. Main `createRow` is now 43 lines with clear delegation.
+- STORY-012: Split `calcOnLoad` into `animateColumnIntro()` (column toggle animation for fresh loads), `restoreUrlState(args)` (URL parameter restoration), and a slim `calcOnLoad()` coordinator (~15 lines).
+- STORY-013: Replaced remaining 2 `Math.pow(2, n)` calls with `2 ** n` (in `createCloudFormationCell` and `generateCloudFormation`).
+- STORY-014: Added `shallowEqual(a, b)` utility function. Replaced 2 `JSON.stringify` object comparisons in `createBookmarkHyperlink` with order-independent shallow comparison.
+- CHORE-002: Changed placeholder region comments in IaC output from generic "Placeholder AZ/Region" to actionable `# TODO: Change this to your availability zone/region`.
+
+**What worked:**
+
+- Named objects made the code dramatically more readable — `node.children` vs `node[2]`, `node.depth` vs `node[0]`
+- The `createCell` helper + sub-function decomposition reduced `createRow` from 230 lines to 43 lines
+- `shallowEqual` is cleaner than `JSON.stringify` comparison and handles key order differences
+- All changes passed ESLint on first attempt — the named object refactor was purely mechanical
+
+**What failed:**
+
+- Nothing failed. The refactoring was straightforward with the IIFE already in place from Phase 4.
+
+**Lessons learned:**
+
+- When decomposing a large function, shared computed values (like `awsSelect`) should be computed once in the parent and passed to sub-functions rather than recomputed
+- The `createCell` helper handles the common case well; special cells (CloudFormation with conditional content, comments with textarea, divide with event handlers) still need manual creation
+- The `labels` array transformation from flat triples to objects was the trickiest part of STORY-009 — the loop index arithmetic `labels[i * 3]` became simply `labels[i].mask`
+
+**Files changed:**
+
+- `lib/script.js` — All changes: added `shallowEqual`, `createNode`, `createCell`, `createSubnetCells`, `createCloudFormationCell`, `createTerraformCell`, `createCommentCell`, `createDivideCell`, `createJoinCells`, `animateColumnIntro`, `restoreUrlState`; refactored `createRow`, `calcOnLoad`, `recreateTables`, `nodeToString`, `divide`, `join`, `updateNumChildren`, `updateDepthChildren`, `loadNode`, `startOver`, `createBookmarkHyperlink`
+- `BACKLOG.md` — Marked STORY-009 through STORY-014 and CHORE-002 as `[x]`
+
+**Verification:**
+
+- `npm run lint` passes with no errors after each change
+- All node creation uses `createNode()` factory — no raw `[0, 0, null]` arrays remain
+- `grep` confirmed zero remaining `node[0]`/`node[1]`/`node[2]` or `Math.pow` references
+- `grep` confirmed zero remaining `JSON.stringify.*!==.*JSON.stringify` patterns
+
+**Related items:**
+
+- STORY-009 directly prevents the class of bug that caused BUG-001 (wrong array index return)
+- STORY-011 sub-functions are individually testable, which supports Phase 7 (STORY-025-028)
+
+---
+
 ### Phase 1: Bug Fixes (BUG-001 through BUG-010)
 
 **Date:** 2026-04-04

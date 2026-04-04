@@ -334,7 +334,7 @@
 ### STORY-009: Replace magic tuple with named object for subnet tree nodes
 
 - **Priority:** High
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** Subnet tree nodes are `[depth, numChildren, children]` arrays. `node[0]`, `node[1]`, `node[2]` are opaque and error-prone (the BUG-001 return value mistake is a direct consequence).
 - **Acceptance Criteria:**
     - [ ] All node creation uses `{ depth, numChildren, children }` objects
@@ -351,7 +351,7 @@
 ### STORY-010: Extract DOM creation helper to reduce boilerplate
 
 - **Priority:** Medium
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** The pattern `createElement → classList.add → createTextNode → appendChild → appendToRow` is repeated ~10 times in `createRow`. A helper function would reduce code volume by ~40%.
 - **Acceptance Criteria:**
     - [ ] A helper function (e.g., `createCell(row, className, content)`) handles common cell creation
@@ -376,7 +376,7 @@
 ### STORY-011: Break `createRow` into smaller functions
 
 - **Priority:** Medium
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** `createRow` is 230 lines (194-422) handling recursion, 10+ cell types, event handlers, and join cell logic. It should be decomposed.
 - **Acceptance Criteria:**
     - [ ] `createRow` is under 50 lines, delegating to named sub-functions
@@ -397,7 +397,7 @@
 ### STORY-012: Break `calcOnLoad` into discrete initialization steps
 
 - **Priority:** Low
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** `calcOnLoad` (line 509-601) handles URL parsing, DOM manipulation, column toggling, comment restoration, IaC restoration, and network updating in one function.
 - **Acceptance Criteria:**
     - [ ] Initialization is broken into named steps: `parseUrlState()`, `restoreState()`, `initializeDefaults()`
@@ -415,7 +415,7 @@
 ### STORY-013: Use `2 ** n` consistently instead of `Math.pow(2, n)`
 
 - **Priority:** Low
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** `Math.pow(2, n)` is used in several places while `2 ** n` is already used on line 495. Standardize on the modern syntax.
 - **Acceptance Criteria:**
     - [ ] All `Math.pow(2, n)` replaced with `2 ** n`
@@ -430,7 +430,7 @@
 ### STORY-014: Replace `JSON.stringify` object comparison
 
 - **Priority:** Low
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** `JSON.stringify(obj1) !== JSON.stringify(obj2)` is used to compare column settings and IaC settings (lines 128, 142). This is order-dependent and slower than a dedicated comparison.
 - **Acceptance Criteria:**
     - [ ] A utility function (e.g., `shallowEqual(a, b)`) replaces JSON serialization comparisons
@@ -466,7 +466,7 @@
 ### CHORE-002: Hard-coded `us-east-1a` placeholder in IaC output
 
 - **Priority:** Low
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** Generated CloudFormation and Terraform include hard-coded `us-east-1a` (line 734) and `us-central1` (line 803) without any user warning. Users may deploy to wrong regions.
 - **Acceptance Criteria:**
     - [ ] Placeholder values include a clear `# TODO: Change this` comment in the output
