@@ -647,7 +647,7 @@
 ### STORY-024: Set up Vitest and test infrastructure
 
 - **Priority:** High
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** Install Vitest and configure it for unit testing the pure JavaScript functions. The current `npm test` script is a stub that echoes an error.
 - **Acceptance Criteria:**
     - [ ] Vitest installed as a dev dependency
@@ -665,7 +665,7 @@
 ### STORY-025: Unit tests for IP math functions
 
 - **Priority:** High
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** Write comprehensive tests for the core IP arithmetic functions.
 - **Acceptance Criteria:**
     - [ ] Tests for `inet_aton`: valid IPs, invalid IPs, edge cases (0.0.0.0, 255.255.255.255, octets > 255)
@@ -685,7 +685,7 @@
 ### STORY-026: Unit tests for tree serialization
 
 - **Priority:** Medium
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** Write tests for the binary tree serialization/deserialization functions.
 - **Acceptance Criteria:**
     - [ ] Tests for `nodeToString`: leaf node, single division, deep tree
@@ -703,7 +703,7 @@
 ### STORY-027: Unit tests for IaC generation
 
 - **Priority:** Medium
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** Write tests for CloudFormation and Terraform code generation.
 - **Acceptance Criteria:**
     - [ ] Tests for `generateCloudFormation`: correct structure, resource names, CIDR values
@@ -721,7 +721,7 @@
 ### STORY-028: Unit tests for subnet tree operations
 
 - **Priority:** Medium
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** Write tests for tree manipulation and traversal functions.
 - **Acceptance Criteria:**
     - [ ] Tests for `updateNumChildren`: correct counts after divide/join
@@ -738,7 +738,7 @@
 ### CHORE-003: Update `package.json` test script
 
 - **Priority:** Low
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** Replace the stub test script with the Vitest command.
 - **Acceptance Criteria:**
     - [ ] `npm test` runs Vitest and exits with appropriate code

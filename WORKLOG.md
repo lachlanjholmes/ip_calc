@@ -47,6 +47,65 @@ Copy this template for each work session:
 
 ## Log Entries
 
+### Phase 7: Automated Tests — Vitest (STORY-024 through STORY-028, CHORE-003)
+
+**Date:** 2026-04-04
+**Status:** Completed
+
+**What was attempted:**
+
+- Set up Vitest test infrastructure for the project
+- Write comprehensive unit tests for all exported pure functions
+- Configure ESLint to handle both browser globals (main code) and Node.js globals (tests + CJS exports)
+
+**What worked:**
+
+- Created `vitest.config.js` with basic configuration
+- Updated `package.json`: `"test": "vitest run"` and `"test:watch": "vitest"` (CHORE-003)
+- Created 4 test files covering all exported functions:
+    - `tests/ip-math.test.js` — 14 tests for `inet_aton`, 7 for `inet_ntoa`, 7 for `network_address`, 6 for `subnet_addresses`, 4 for `subnet_last_address`, 7 for `subnet_netmask`
+    - `tests/serialization.test.js` — 5 tests for `nodeToString`, 9 for `binToAscii`/`asciiToBin`, 6 for `loadNode`
+    - `tests/tree-operations.test.js` — 2 tests for `createNode`, 4 for `updateNumChildren`, 4 for `updateDepthChildren`, 9 for `findAwsSubnetIndex`
+    - `tests/iac-generation.test.js` — 8 tests for `jsonToYaml`, 9 for `shallowEqual`
+- Total: 100 tests, all passing
+- ESLint config extended with overrides for `lib/script.js` (`module` global) and `tests/**/*.test.js` (Node.js globals)
+
+**What failed:**
+
+- Vitest v4 cannot be `require()`d — initial attempt used CJS `const { describe } = require('vitest')` which fails. Fixed by converting test files to ESM `import` syntax with `createRequire` for importing the CJS `script.js`
+- IIFE's `window.addEventListener('DOMContentLoaded', ...)` executes immediately on `require()`, causing `ReferenceError: window is not defined` in Node.js. Fixed by wrapping with `if (typeof window !== 'undefined')` guard
+- `jsonToYaml` array-of-objects output format: assumed `"- key: value"` on same line, but actual output puts dash on its own line with indented key below. Fixed test expectation.
+
+**Lessons learned:**
+
+- Vitest v4 is ESM-only — test files must use `import` syntax even when the code under test is CJS
+- Use `createRequire(import.meta.url)` to bridge ESM test files importing CJS modules
+- IIFE code that touches browser globals (`window`, `document`) must be guarded with `typeof window !== 'undefined'` when the file is also loaded in Node.js for testing
+- The conditional `module.exports` block at the bottom of the IIFE works perfectly for exporting pure functions to tests without affecting browser behavior
+- `divide()` and `join()` call `recreateTables()` (DOM-dependent) so they're not directly testable without mocking — but their data mutations can be tested by manually setting `node.children`
+
+**Files changed:**
+
+- `vitest.config.js` — new file, basic Vitest configuration
+- `package.json:13-14` — updated test scripts to use Vitest
+- `lib/script.js:781-786` — guarded `window.addEventListener` with `typeof window !== 'undefined'`
+- `eslint.config.mjs:25-38` — added overrides for `module` global in script.js and Node.js globals in test files
+- `tests/ip-math.test.js` — new file, 45 tests for IP math functions
+- `tests/serialization.test.js` — new file, 20 tests for tree serialization
+- `tests/tree-operations.test.js` — new file, 19 tests for tree operations and AWS subnet indexing
+- `tests/iac-generation.test.js` — new file, 17 tests for jsonToYaml and shallowEqual
+
+**Verification:**
+
+- `npm test` — 100 tests passing across 4 test files
+- `npm run lint` — 0 errors, 0 warnings
+
+**Related items:**
+
+- STORY-024, STORY-025, STORY-026, STORY-027, STORY-028, CHORE-003 — all completed in this session
+
+---
+
 ### Phase 6: Accessibility + Semantic HTML (STORY-015 through STORY-023)
 
 **Date:** 2026-04-04
