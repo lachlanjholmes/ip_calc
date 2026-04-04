@@ -193,3 +193,42 @@ Copy this template for each work session:
 
 - STORY-007 was effectively completed by STORY-004
 - STORY-004 lays groundwork for STORY-008 (ES modules) — fewer functions need global exposure
+
+---
+
+### Phase 4: ES Modules + Global Encapsulation (STORY-008)
+
+**Date:** 2026-04-04
+**Status:** Completed
+
+**What was attempted:**
+
+- STORY-008: Convert the script to an ES module to encapsulate all globals
+
+**What worked:**
+
+1. **STORY-008** — Changed `<script src="lib/script.js" type="text/javascript">` to `<script src="lib/script.js" type="module">` in `index.html`. This automatically scopes all top-level `let`/`const`/`function` declarations to the module, preventing global namespace pollution. No `export` statements were needed because STORY-004 already moved all event handler registration into JS via `addEventListener` — the module is self-contained and self-initializing. Updated `eslint.config.mjs` with `sourceType: 'module'` and changed `package.json` from `"type": "commonjs"` to `"type": "module"` for consistency.
+
+**What failed:**
+
+- Nothing failed. The conversion was trivial because STORY-004 eliminated all external function references from HTML.
+
+**Lessons learned:**
+
+- ES module conversion is nearly free when all event handlers are already in JS (STORY-004). The dependency ordering in the backlog was correct — doing STORY-004 first made STORY-008 a one-line HTML change.
+- `type="module"` scripts are automatically deferred, so the `DOMContentLoaded` listener still fires correctly since the DOM is already parsed by the time the module executes.
+
+**Files changed:**
+
+- `index.html:6` — changed `type="text/javascript"` to `type="module"`
+- `eslint.config.mjs:12` — added `sourceType: 'module'`
+- `package.json:22` — changed `"type": "commonjs"` to `"type": "module"`
+
+**Verification:**
+
+- `npm run lint` — passed with zero errors
+- No automated tests exist yet (Phase 7) — manual browser verification recommended
+
+**Related items:**
+
+- Depends on STORY-004 (already completed)

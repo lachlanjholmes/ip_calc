@@ -312,7 +312,7 @@
 ### STORY-008: Convert to ES modules
 
 - **Priority:** High
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** The four globals (`curNetwork`, `curMask`, `curComments`, `rootSubnet`) and all functions pollute the global namespace. Convert to ES modules for proper encapsulation.
 - **Acceptance Criteria:**
     - [ ] `lib/script.js` uses `export` for functions referenced from HTML
