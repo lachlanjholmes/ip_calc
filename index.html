@@ -12,7 +12,7 @@
                 <td>
                     <h1>Visual Subnet Calculator</h1>
                     <p>Enter the network you wish to subnet:</p>
-                    <form name="calc" onsubmit="updateNetwork(); return false;">
+                    <form name="calc" id="calcForm">
                         <table cellspacing="0">
                             <tr>
                                 <td class="label">Network Address</td>
@@ -39,76 +39,45 @@
                                 </td>
                                 <td>
                                     <input type="submit" value="Update" />
-                                    <input
-                                        type="button"
-                                        value="Reset"
-                                        onclick="if (confirm('This will reset all subnet divisions you have made. Proceed?')) startOver();"
-                                    />
+                                    <input type="button" id="resetBtn" value="Reset" />
                                 </td>
                             </tr>
                         </table>
                         <p>
                             Show columns:
-                            <input
-                                type="checkbox"
-                                id="cb_subnet"
-                                checked
-                                onchange="toggleColumn(this)"
-                            /><label for="cb_subnet">Subnet address</label>
-                            <input
-                                type="checkbox"
-                                id="cb_netmask"
-                                checked
-                                onchange="toggleColumn(this)"
-                            /><label for="cb_netmask">Netmask</label>
-                            <input
-                                type="checkbox"
-                                id="cb_range"
-                                checked
-                                onchange="toggleColumn(this)"
-                            /><label for="cb_range">Range of addresses</label>
-                            <input
-                                type="checkbox"
-                                id="cb_useable"
-                                checked
-                                onchange="toggleColumn(this)"
-                            /><label for="cb_useable">Useable IPs</label>
-                            <input
-                                type="checkbox"
-                                id="cb_hosts"
-                                checked
-                                onchange="toggleColumn(this)"
-                            /><label for="cb_hosts">Hosts</label>
-                            <input
-                                type="checkbox"
-                                id="cb_cloudformation"
-                                checked
-                                onchange="toggleColumn(this)"
-                            /><label for="cb_cloudformation">AWS CloudFormation</label>
-                            <input
-                                type="checkbox"
-                                id="cb_terraform"
-                                checked
-                                onchange="toggleColumn(this)"
-                            /><label for="cb_terraform">Terraform</label>
-                            <input
-                                type="checkbox"
-                                id="cb_comments"
-                                checked
-                                onchange="toggleColumn(this)"
-                            /><label for="cb_comments">Comments</label>
-                            <input
-                                type="checkbox"
-                                id="cb_divide"
-                                checked
-                                onchange="toggleColumn(this)"
-                            /><label for="cb_divide">Divide</label>
-                            <input
-                                type="checkbox"
-                                id="cb_join"
-                                checked
-                                onchange="toggleColumn(this)"
-                            /><label for="cb_join">Join</label>
+                            <input type="checkbox" id="cb_subnet" checked /><label for="cb_subnet"
+                                >Subnet address</label
+                            >
+                            <input type="checkbox" id="cb_netmask" checked /><label for="cb_netmask"
+                                >Netmask</label
+                            >
+                            <input type="checkbox" id="cb_range" checked /><label for="cb_range"
+                                >Range of addresses</label
+                            >
+                            <input type="checkbox" id="cb_useable" checked /><label for="cb_useable"
+                                >Useable IPs</label
+                            >
+                            <input type="checkbox" id="cb_hosts" checked /><label for="cb_hosts"
+                                >Hosts</label
+                            >
+                            <input type="checkbox" id="cb_cloudformation" checked /><label
+                                for="cb_cloudformation"
+                                >AWS CloudFormation</label
+                            >
+                            <input type="checkbox" id="cb_terraform" checked /><label
+                                for="cb_terraform"
+                                >Terraform</label
+                            >
+                            <input type="checkbox" id="cb_comments" checked /><label
+                                for="cb_comments"
+                                >Comments</label
+                            >
+                            <input type="checkbox" id="cb_divide" checked /><label for="cb_divide"
+                                >Divide</label
+                            >
+                            <input type="checkbox" id="cb_join" checked /><label for="cb_join"
+                                >Join</label
+                            >
                         </p>
                     </form>
                     <p>
@@ -157,28 +126,27 @@
         <form name="exportForm">
             <p>
                 <label for="iacType">IaC Type:</label>
-                <select id="iacType" name="iacType" onchange="handleIacTypeChange()">
+                <select id="iacType" name="iacType">
                     <option value="cloudformation">AWS CloudFormation</option>
                     <option value="terraform">Terraform</option>
                 </select>
                 <label for="cloudProvider" id="cloudProviderLabel" style="display: none"
                     >Cloud Provider:</label
                 >
-                <select id="cloudProvider" name="cloudProvider" style="display: none" onchange="createBookmarkHyperlink()">
+                <select id="cloudProvider" name="cloudProvider" style="display: none">
                     <option value="aws">AWS</option>
                     <option value="azure">Azure</option>
                     <option value="gcp">GCP</option>
                 </select>
                 <label for="outputFormat">Format:</label>
-                <select id="outputFormat" name="outputFormat" onchange="createBookmarkHyperlink()">
+                <select id="outputFormat" name="outputFormat">
                     <option value="yaml">YAML</option>
                     <option value="json">JSON</option>
                 </select>
-                <input type="checkbox" id="hardcodeCidr" onchange="generateIac(); createBookmarkHyperlink()" /><label
-                    for="hardcodeCidr"
+                <input type="checkbox" id="hardcodeCidr" /><label for="hardcodeCidr"
                     >Hardcode CIDR</label
                 >
-                <input type="button" value="Generate IaC" onclick="generateIac()" />
+                <input type="button" id="generateIacBtn" value="Generate IaC" />
             </p>
             <textarea id="iacOutput" rows="20" cols="80" readonly></textarea>
         </form>

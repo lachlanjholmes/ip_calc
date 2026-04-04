@@ -8,8 +8,6 @@ export default [
         languageOptions: {
             globals: {
                 ...globals.browser,
-                generateIac: 'readonly',
-                toggleColumn: 'readonly',
             },
         },
     },

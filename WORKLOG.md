@@ -143,3 +143,53 @@ Copy this template for each work session:
 **Related items:**
 
 - STORY-003 was already done in Phase 1 (BUG-009)
+
+---
+
+### Phase 3: Security Hardening (STORY-004 through STORY-007)
+
+**Date:** 2026-04-04
+**Status:** Completed
+
+**What was attempted:**
+
+- STORY-004: Moved all inline event handlers from HTML to `addEventListener` calls in JS
+- STORY-005: Fixed Terraform resource name sanitization regex
+- STORY-006: Replaced all `for...in` loops with `Object.keys()` / `Object.entries()`
+- STORY-007: Replaced `window.onload` with `addEventListener('DOMContentLoaded', ...)`
+
+**What worked:**
+
+1. **STORY-004** — Removed all inline `onsubmit`, `onclick`, `onchange` handlers from `index.html`. Added a `registerEventListeners()` function in `script.js` that attaches all handlers via `addEventListener`. Added `id` attributes to the Reset button (`resetBtn`) and Generate IaC button (`generateIacBtn`) for targeting. Also added `id="calcForm"` to the main form. Removed `window.generateIac = generateIac` global assignment and the `generateIac`/`toggleColumn` globals from `eslint.config.mjs`. Removed the now-unnecessary `eslint-disable-next-line no-unused-vars` directive on `toggleColumn`.
+2. **STORY-005** — Changed Terraform regex from `/[^a-zA-Z0-9_.-]/g` to `/[^a-zA-Z0-9_]/g` and added `.replace(/^([0-9])/, 'subnet_$1')` prefix for names starting with digits. Terraform identifiers now strictly match `[a-zA-Z_][a-zA-Z0-9_]*`.
+3. **STORY-006** — Replaced 4 `for...in` loops on `curComments` and `joinLocks` with `for...of Object.keys(...)`. Also replaced the `for...in` with `hasOwnProperty` guard in `jsonToYaml` with cleaner `Object.entries()` destructuring.
+4. **STORY-007** — Already completed as part of STORY-004. The old `window.onload = calcOnLoad` and separate `window.addEventListener('load', handleIacTypeChange)` were replaced with a single `window.addEventListener('DOMContentLoaded', ...)` that calls `registerEventListeners()`, `calcOnLoad()`, and `handleIacTypeChange()`.
+
+**What failed:**
+
+- STORY-006: First edit accidentally consumed the line following the `for` statement. Fixed immediately by re-reading the affected region and restoring the lost line.
+
+**Lessons learned:**
+
+- When replacing `for...in` with `for...of Object.keys(...)`, be careful not to accidentally consume adjacent lines in the edit operation
+- STORY-004 and STORY-007 are naturally coupled — moving to `addEventListener` in JS simultaneously eliminates `window.onload`
+- Removing inline handlers also eliminated the need for `window.generateIac` workaround and the ESLint global declarations
+
+**Files changed:**
+
+- `index.html:15-111` — STORY-004: removed all inline event handlers, added `id` attributes
+- `index.html:160-181` — STORY-004: removed inline handlers from export form
+- `lib/script.js:670-751` — STORY-004: added `registerEventListeners()` function, replaced `window.onload` with `DOMContentLoaded`
+- `lib/script.js:881` — STORY-005: fixed Terraform regex and added digit prefix
+- `lib/script.js:86,94,820,874,949` — STORY-006: `for...in` → `Object.keys()`/`Object.entries()`
+- `eslint.config.mjs:10-13` — STORY-004: removed `generateIac` and `toggleColumn` globals
+
+**Verification:**
+
+- `npm run lint` — passed with zero errors after all changes
+- No automated tests exist yet (Phase 7) — manual browser verification recommended
+
+**Related items:**
+
+- STORY-007 was effectively completed by STORY-004
+- STORY-004 lays groundwork for STORY-008 (ES modules) — fewer functions need global exposure

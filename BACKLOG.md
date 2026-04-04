@@ -243,7 +243,7 @@
 ### STORY-004: Move inline event handlers to `addEventListener`
 
 - **Priority:** High
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** All event handlers in `index.html` are inline (`onclick`, `onsubmit`, `onchange`). This prevents using a Content Security Policy (CSP) without `unsafe-inline`, which is a major XSS mitigation.
 - **Acceptance Criteria:**
     - [ ] All inline event handlers removed from HTML
@@ -262,7 +262,7 @@
 ### STORY-005: Fix Terraform resource name sanitization
 
 - **Priority:** Medium
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** The regex `/[^a-zA-Z0-9_.-]/g` (line 765) keeps `.` and `-` which are invalid in Terraform resource names. Terraform identifiers must match `[a-zA-Z_][a-zA-Z0-9_]*`.
 - **Acceptance Criteria:**
     - [ ] Resource names only contain `[a-zA-Z0-9_]`
@@ -278,7 +278,7 @@
 ### STORY-006: Replace `for...in` with `Object.entries()` for comment iteration
 
 - **Priority:** Medium
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** `for...in` loops iterate inherited properties. If `Object.prototype` is ever extended (by a browser extension, polyfill, etc.), comment iteration would include unexpected keys.
 - **Acceptance Criteria:**
     - [ ] All `for...in` loops on `curComments` use `Object.entries()` or `Object.keys()`
@@ -295,7 +295,7 @@
 ### STORY-007: Replace `window.onload` with `addEventListener`
 
 - **Priority:** Low
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** `window.onload = calcOnLoad` (line 633) can be overwritten by any other script. Line 636 already uses `addEventListener` for `handleIacTypeChange`, creating an inconsistency.
 - **Acceptance Criteria:**
     - [ ] `window.onload` replaced with `addEventListener('DOMContentLoaded', calcOnLoad)`
