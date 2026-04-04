@@ -9,7 +9,6 @@ export default [
             globals: {
                 ...globals.browser,
             },
-            sourceType: 'module',
         },
     },
     pluginJs.configs.recommended,

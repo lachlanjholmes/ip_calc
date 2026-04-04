@@ -199,36 +199,41 @@ Copy this template for each work session:
 ### Phase 4: ES Modules + Global Encapsulation (STORY-008)
 
 **Date:** 2026-04-04
-**Status:** Completed
+**Status:** Completed (revised approach)
 
 **What was attempted:**
 
-- STORY-008: Convert the script to an ES module to encapsulate all globals
+- STORY-008: Encapsulate all globals to prevent namespace pollution
 
 **What worked:**
 
-1. **STORY-008** — Changed `<script src="lib/script.js" type="text/javascript">` to `<script src="lib/script.js" type="module">` in `index.html`. This automatically scopes all top-level `let`/`const`/`function` declarations to the module, preventing global namespace pollution. No `export` statements were needed because STORY-004 already moved all event handler registration into JS via `addEventListener` — the module is self-contained and self-initializing. Updated `eslint.config.mjs` with `sourceType: 'module'` and changed `package.json` from `"type": "commonjs"` to `"type": "module"` for consistency.
+1. **STORY-008 (initial attempt)** — Changed `<script>` to `type="module"`. This scoped all declarations automatically with zero code changes.
+2. **STORY-008 (revised)** — After user reported CORS error when opening `index.html` via `file://`, reverted `type="module"` and wrapped entire `script.js` in an IIFE: `(function() { 'use strict'; ... })();`. This achieves the same encapsulation without requiring an HTTP server. Reverted `eslint.config.mjs` `sourceType` and `package.json` `type` back to their original values.
 
 **What failed:**
 
-- Nothing failed. The conversion was trivial because STORY-004 eliminated all external function references from HTML.
+- `type="module"` enforces CORS even on local `file://` protocol. Browsers block module script loading from the filesystem, breaking the page entirely with: `Access to script blocked by CORS policy: Cross origin requests are only supported for protocol schemes: http, https`. This is a fundamental browser security restriction — ES modules can only be loaded via HTTP/HTTPS, not `file://`.
 
 **Lessons learned:**
 
-- ES module conversion is nearly free when all event handlers are already in JS (STORY-004). The dependency ordering in the backlog was correct — doing STORY-004 first made STORY-008 a one-line HTML change.
-- `type="module"` scripts are automatically deferred, so the `DOMContentLoaded` listener still fires correctly since the DOM is already parsed by the time the module executes.
+- **Critical:** ES modules (`type="module"`) do NOT work when opening HTML files directly from the filesystem (`file://` protocol). This is a browser security restriction, not a bug. Any project that needs to work without a dev server must avoid `type="module"`.
+- An IIFE achieves the same encapsulation goal (no global leakage) without the `file://` restriction.
+- Always test changes by actually opening the page in a browser, not just running lint.
 
 **Files changed:**
 
-- `index.html:6` — changed `type="text/javascript"` to `type="module"`
-- `eslint.config.mjs:12` — added `sourceType: 'module'`
-- `package.json:22` — changed `"type": "commonjs"` to `"type": "module"`
+- `index.html:6` — reverted to plain `<script src="lib/script.js">`
+- `lib/script.js:1-3` — wrapped in IIFE: `(function () { 'use strict';`
+- `lib/script.js:EOF` — closed IIFE: `})();`
+- `eslint.config.mjs` — reverted `sourceType` removal
+- `package.json` — reverted to `"type": "commonjs"`
 
 **Verification:**
 
 - `npm run lint` — passed with zero errors
-- No automated tests exist yet (Phase 7) — manual browser verification recommended
+- Page loads correctly when opened via `file://` protocol
 
 **Related items:**
 
 - Depends on STORY-004 (already completed)
+- If a dev server is ever added (e.g., via Vite in Phase 7), `type="module"` could be revisited
