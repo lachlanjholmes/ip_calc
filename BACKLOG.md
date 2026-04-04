@@ -183,7 +183,7 @@
 ### STORY-001: Batch column toggle initialization to avoid 20 table rebuilds
 
 - **Priority:** High
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** On fresh page load (no URL params), the animated column toggle effect calls `toggleColumn()` → `recreateTables()` 20 times in the first 350ms. This is a visual effect but causes 20 full DOM table rebuilds.
 - **Acceptance Criteria:**
     - [ ] Page load triggers at most 2 table rebuilds (one for initial, one after animation)
@@ -199,7 +199,7 @@
 ### STORY-002: Replace brute-force subnet index calculation with arithmetic
 
 - **Priority:** Medium
-- **Status:** `[ ]`
+- **Status:** `[x]`
 - **Description:** `calculateSubnets` (line 868-886) generates ALL possible subnets by iterating with octet-level carry propagation, then `findAwsSubnetIndex` does `indexOf` to find the position. This is O(n) where n = `2^(subnetMask - supernetMask)`. For a `/16` divided into `/24`s, that's 256 iterations. The index can be calculated directly: `(subnetAddr - supernetAddr) / subnetSize`.
 - **Acceptance Criteria:**
     - [ ] `findAwsSubnetIndex` uses direct arithmetic instead of enumeration

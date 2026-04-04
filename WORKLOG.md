@@ -100,3 +100,46 @@ Copy this template for each work session:
 
 - STORY-003 and CHORE-001 marked as done (addressed with BUG-009)
 - BUG-006 call sites (lines 286, 727, 782) now receive `-1` on failure instead of a string — IaC output will show `-1` which is still wrong but at least obviously wrong rather than silently bad. Full fix deferred to STORY-002 (arithmetic replacement)
+
+---
+
+### Phase 2: Performance (STORY-001, STORY-002)
+
+**Date:** 2026-04-04
+**Status:** Completed
+
+**What was attempted:**
+
+- STORY-001: Eliminated 20 redundant `recreateTables()` calls during page load column animation
+- STORY-002: Replaced O(n) brute-force subnet enumeration with O(1) arithmetic calculation
+
+**What worked:**
+
+1. **STORY-001** — Added `skipRedraw` parameter to `toggleColumn()`. Replaced the animation in `calcOnLoad` to toggle checkboxes and CSS custom properties directly (without dispatching click events), then call `recreateTables()` once after all animations complete. The `clickElement` helper function became unused and was removed.
+2. **STORY-002** — Replaced `calculateSubnets` (brute-force octet-level carry propagation + `indexOf`) with direct arithmetic: `((subnetInt >>> 0) - (supernetInt >>> 0)) >>> 0 / subnetSize`. Used `>>> 0` for unsigned 32-bit comparison to handle IPs >= 128.0.0.0 where bitwise ops produce signed negatives. The `calculateSubnets` function was fully removed.
+
+**What failed:**
+
+- Nothing failed. Both changes were clean replacements.
+
+**Lessons learned:**
+
+- The column toggle animation was dispatching synthetic click events (`clickElement` → `dispatchEvent(new MouseEvent(...))`) which triggered the full `onchange` → `toggleColumn` → `recreateTables` pipeline. Direct CSS property manipulation is sufficient for visual-only effects.
+- JavaScript bitwise operations produce signed 32-bit integers. For IP arithmetic with addresses >= 128.0.0.0 (e.g., `192.168.0.0`), `inet_aton` returns a negative number. The `>>> 0` operator converts to unsigned, which is essential for correct subtraction.
+- STORY-003 was already completed in Phase 1 (addressed with BUG-009).
+
+**Files changed:**
+
+- `lib/script.js:525-556` — STORY-001: replaced click-event animation with direct CSS toggle + single `recreateTables()` call at end
+- `lib/script.js:872-881` — STORY-001: added `skipRedraw` parameter to `toggleColumn()`
+- `lib/script.js:888-906` — STORY-002: replaced `calculateSubnets` + `findAwsSubnetIndex` with arithmetic-based `findAwsSubnetIndex`
+- `lib/script.js` — removed unused `clickElement` helper function
+
+**Verification:**
+
+- `npm run lint` — passed with zero errors after all changes
+- No automated tests exist yet (Phase 7) — manual browser verification recommended
+
+**Related items:**
+
+- STORY-003 was already done in Phase 1 (BUG-009)
