@@ -7,183 +7,177 @@
         <link rel="stylesheet" type="text/css" href="lib/style.css" />
     </head>
     <body>
-        <table width="100%">
-            <tr valign="top">
-                <td>
-                    <h1>Visual Subnet Calculator</h1>
-                    <p>Enter the network you wish to subnet:</p>
-                    <form name="calc" onsubmit="updateNetwork(); return false;">
-                        <table cellspacing="0">
-                            <tr>
-                                <td class="label">Network Address</td>
-                                <td class="label">Mask bits</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input
-                                        type="text"
-                                        name="network"
-                                        size="15"
-                                        maxlength="15"
-                                        value="192.168.0.0"
-                                    />
-                                </td>
-                                <td>
-                                    /<input
-                                        type="text"
-                                        name="netbits"
-                                        size="2"
-                                        maxlength="2"
-                                        value="16"
-                                    />
-                                </td>
-                                <td>
-                                    <input type="submit" value="Update" />
-                                    <input
-                                        type="button"
-                                        value="Reset"
-                                        onclick="if (confirm('This will reset all subnet divisions you have made. Proceed?')) startOver();"
-                                    />
-                                </td>
-                            </tr>
-                        </table>
-                        <p>
-                            Show columns:
+        <div class="page-container">
+            <header>
+                <h1>Visual Subnet Calculator</h1>
+                <p>Enter the network you wish to subnet:</p>
+            </header>
+
+            <div class="card">
+                <form name="calc" onsubmit="updateNetwork(); return false;">
+                    <div class="form-row">
+                        <div>
+                            <label class="label">Network Address</label><br />
                             <input
-                                type="checkbox"
-                                id="cb_subnet"
-                                checked
-                                onchange="toggleColumn(this)"
-                            /><label for="cb_subnet">Subnet address</label>
+                                type="text"
+                                name="network"
+                                size="15"
+                                maxlength="15"
+                                value="192.168.0.0"
+                            />
+                        </div>
+                        <div>
+                            <label class="label">Mask bits</label><br />
+                            /<input
+                                type="text"
+                                name="netbits"
+                                size="2"
+                                maxlength="2"
+                                value="16"
+                            />
+                        </div>
+                        <div style="display: flex; align-items: flex-end; gap: 8px;">
+                            <input type="submit" value="Update" />
                             <input
-                                type="checkbox"
-                                id="cb_netmask"
-                                checked
-                                onchange="toggleColumn(this)"
-                            /><label for="cb_netmask">Netmask</label>
-                            <input
-                                type="checkbox"
-                                id="cb_range"
-                                checked
-                                onchange="toggleColumn(this)"
-                            /><label for="cb_range">Range of addresses</label>
-                            <input
-                                type="checkbox"
-                                id="cb_useable"
-                                checked
-                                onchange="toggleColumn(this)"
-                            /><label for="cb_useable">Useable IPs</label>
-                            <input
-                                type="checkbox"
-                                id="cb_hosts"
-                                checked
-                                onchange="toggleColumn(this)"
-                            /><label for="cb_hosts">Hosts</label>
-                            <input
-                                type="checkbox"
-                                id="cb_cloudformation"
-                                checked
-                                onchange="toggleColumn(this)"
-                            /><label for="cb_cloudformation">AWS CloudFormation</label>
-                            <input
-                                type="checkbox"
-                                id="cb_terraform"
-                                checked
-                                onchange="toggleColumn(this)"
-                            /><label for="cb_terraform">Terraform</label>
-                            <input
-                                type="checkbox"
-                                id="cb_comments"
-                                checked
-                                onchange="toggleColumn(this)"
-                            /><label for="cb_comments">Comments</label>
-                            <input
-                                type="checkbox"
-                                id="cb_divide"
-                                checked
-                                onchange="toggleColumn(this)"
-                            /><label for="cb_divide">Divide</label>
-                            <input
-                                type="checkbox"
-                                id="cb_join"
-                                checked
-                                onchange="toggleColumn(this)"
-                            /><label for="cb_join">Join</label>
-                        </p>
-                    </form>
+                                type="button"
+                                value="Reset"
+                                onclick="if (confirm('This will reset all subnet divisions you have made. Proceed?')) startOver();"
+                            />
+                        </div>
+                    </div>
                     <p>
-                        Click below to split and join subnets.<br />
-                        If you wish to save this subnetting for later, bookmark
-                        <a href="subnets.html" id="saveLink">this hyperlink</a>.
+                        Show columns:
+                        <input
+                            type="checkbox"
+                            id="cb_subnet"
+                            checked
+                            onchange="toggleColumn(this)"
+                        /><label for="cb_subnet">Subnet address</label>
+                        <input
+                            type="checkbox"
+                            id="cb_netmask"
+                            checked
+                            onchange="toggleColumn(this)"
+                        /><label for="cb_netmask">Netmask</label>
+                        <input
+                            type="checkbox"
+                            id="cb_range"
+                            checked
+                            onchange="toggleColumn(this)"
+                        /><label for="cb_range">Range of addresses</label>
+                        <input
+                            type="checkbox"
+                            id="cb_useable"
+                            checked
+                            onchange="toggleColumn(this)"
+                        /><label for="cb_useable">Useable IPs</label>
+                        <input
+                            type="checkbox"
+                            id="cb_hosts"
+                            checked
+                            onchange="toggleColumn(this)"
+                        /><label for="cb_hosts">Hosts</label>
+                        <input
+                            type="checkbox"
+                            id="cb_cloudformation"
+                            checked
+                            onchange="toggleColumn(this)"
+                        /><label for="cb_cloudformation">AWS CloudFormation</label>
+                        <input
+                            type="checkbox"
+                            id="cb_terraform"
+                            checked
+                            onchange="toggleColumn(this)"
+                        /><label for="cb_terraform">Terraform</label>
+                        <input
+                            type="checkbox"
+                            id="cb_comments"
+                            checked
+                            onchange="toggleColumn(this)"
+                        /><label for="cb_comments">Comments</label>
+                        <input
+                            type="checkbox"
+                            id="cb_divide"
+                            checked
+                            onchange="toggleColumn(this)"
+                        /><label for="cb_divide">Divide</label>
+                        <input
+                            type="checkbox"
+                            id="cb_join"
+                            checked
+                            onchange="toggleColumn(this)"
+                        /><label for="cb_join">Join</label>
                     </p>
-                </td>
-            </tr>
-        </table>
-        <br />
-        <hr noshade color="black" size="1" />
-        <br />
-        <table class="calc" cellspacing="0" cellpadding="2">
-            <colgroup>
-                <col id="col_subnet" />
-                <col id="col_netmask" />
-                <col id="col_range" />
-                <col id="col_useable" />
-                <col id="col_hosts" />
-                <col id="col_cloudformation" />
-                <col id="col_terraform" />
-                <col id="col_comments" />
-                <col id="col_divide" />
-                <col id="col_join" />
-            </colgroup>
-            <thead>
-                <tr>
-                    <td class="col_subnet">Subnet address</td>
-                    <td class="col_netmask">Netmask</td>
-                    <td class="col_range">Range of addresses</td>
-                    <td class="col_useable">Useable IPs</td>
-                    <td class="col_hosts">Hosts</td>
-                    <td class="col_cloudformation">AWS CloudFormation</td>
-                    <td class="col_terraform">Terraform</td>
-                    <td class="col_comments">Comments</td>
-                    <td class="col_divide">Divide</td>
-                    <td class="col_join" id="joinHeader">Join</td>
-                </tr>
-            </thead>
-            <tbody id="calcbody"></tbody>
-        </table>
-        <br />
-        <hr noshade color="black" size="1" />
-        <h2>Export IaC</h2>
-        <form name="exportForm">
-            <p>
-                <label for="iacType">IaC Type:</label>
-                <select id="iacType" name="iacType" onchange="handleIacTypeChange()">
-                    <option value="cloudformation">AWS CloudFormation</option>
-                    <option value="terraform">Terraform</option>
-                </select>
-                <label for="cloudProvider" id="cloudProviderLabel" style="display: none"
-                    >Cloud Provider:</label
-                >
-                <select id="cloudProvider" name="cloudProvider" style="display: none" onchange="createBookmarkHyperlink()">
-                    <option value="aws">AWS</option>
-                    <option value="azure">Azure</option>
-                    <option value="gcp">GCP</option>
-                </select>
-                <label for="outputFormat">Format:</label>
-                <select id="outputFormat" name="outputFormat" onchange="createBookmarkHyperlink()">
-                    <option value="yaml">YAML</option>
-                    <option value="json">JSON</option>
-                </select>
-                <input type="checkbox" id="hardcodeCidr" onchange="generateIac(); createBookmarkHyperlink()" /><label
-                    for="hardcodeCidr"
-                    >Hardcode CIDR</label
-                >
-                <input type="button" value="Generate IaC" onclick="generateIac()" />
-            </p>
-            <textarea id="iacOutput" rows="20" cols="80" readonly></textarea>
-        </form>
-        <footer>
-            <p>Source code: <a href="https://github.com/lachlanjholmes/ip_calc">GitHub</a></p>
-        </footer>
+                </form>
+                <p>
+                    Click below to split and join subnets.<br />
+                    If you wish to save this subnetting for later, bookmark
+                    <a href="subnets.html" id="saveLink">this hyperlink</a>.
+                </p>
+            </div>
+
+            <div class="table-scroll-wrapper">
+                <table class="calc" cellspacing="0" cellpadding="2">
+                    <colgroup>
+                        <col id="col_subnet" />
+                        <col id="col_netmask" />
+                        <col id="col_range" />
+                        <col id="col_useable" />
+                        <col id="col_hosts" />
+                        <col id="col_cloudformation" />
+                        <col id="col_terraform" />
+                        <col id="col_comments" />
+                        <col id="col_divide" />
+                        <col id="col_join" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <td class="col_subnet">Subnet address</td>
+                            <td class="col_netmask">Netmask</td>
+                            <td class="col_range">Range of addresses</td>
+                            <td class="col_useable">Useable IPs</td>
+                            <td class="col_hosts">Hosts</td>
+                            <td class="col_cloudformation">AWS CloudFormation</td>
+                            <td class="col_terraform">Terraform</td>
+                            <td class="col_comments">Comments</td>
+                            <td class="col_divide">Divide</td>
+                            <td class="col_join" id="joinHeader">Join</td>
+                        </tr>
+                    </thead>
+                    <tbody id="calcbody"></tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h2>Export IaC</h2>
+                <form name="exportForm">
+                    <div class="export-row">
+                        <label for="iacType">IaC Type:</label>
+                        <select id="iacType" name="iacType" onchange="handleIacTypeChange()">
+                            <option value="cloudformation">AWS CloudFormation</option>
+                            <option value="terraform">Terraform</option>
+                        </select>
+                        <label for="cloudProvider" id="cloudProviderLabel" style="display: none">Cloud Provider:</label>
+                        <select id="cloudProvider" name="cloudProvider" style="display: none" onchange="createBookmarkHyperlink()">
+                            <option value="aws">AWS</option>
+                            <option value="azure">Azure</option>
+                            <option value="gcp">GCP</option>
+                        </select>
+                        <label for="outputFormat">Format:</label>
+                        <select id="outputFormat" name="outputFormat" onchange="createBookmarkHyperlink()">
+                            <option value="yaml">YAML</option>
+                            <option value="json">JSON</option>
+                        </select>
+                        <input type="checkbox" id="hardcodeCidr" onchange="generateIac(); createBookmarkHyperlink()" /><label for="hardcodeCidr">Hardcode CIDR</label>
+                        <input type="button" value="Generate IaC" onclick="generateIac()" />
+                    </div>
+                    <textarea id="iacOutput" rows="20" cols="80" readonly></textarea>
+                </form>
+            </div>
+
+            <footer>
+                <p>Source code: <a href="https://github.com/lachlanjholmes/ip_calc">GitHub</a></p>
+            </footer>
+        </div>
     </body>
 </html>
