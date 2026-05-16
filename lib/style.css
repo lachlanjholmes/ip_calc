@@ -1,16 +1,62 @@
+/* ============================================================
+   Visual Subnet Calculator — lib/style.css
+   Dark theme redesign: design tokens, base reset, and
+   all JS-facing display rules preserved exactly.
+   ============================================================ */
+
+/* ── Design tokens ─────────────────────────────────────────── */
 :root {
-    --display-subnet: table-cell;
-    --display-netmask: table-cell;
-    --display-range: table-cell;
-    --display-useable: table-cell;
-    --display-hosts: table-cell;
+    /* Color palette */
+    --color-bg:         #0d1117;
+    --color-card:       #161b22;
+    --color-border:     #30363d;
+    --color-text:       #e6edf3;
+    --color-text-muted: #8b949e;
+    --color-accent:     #00bcd4;
+    --color-accent-dim: #0097a7;
+    --color-row-even:   #161b22;
+    --color-row-odd:    #0d1117;
+    --color-row-hover:  #1f2937;
+    --color-join-bg:    #0e2a2e;
+    --color-code-bg:    #010409;
+    --color-btn-reset:  #3d1f1f;
+
+    /* Typography */
+    --font-sans: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+    --font-mono: ui-monospace, "Cascadia Code", "Fira Code", Consolas, "Courier New", monospace;
+
+    /* Spacing */
+    --radius:  8px;
+    --padding: 20px;
+
+    /* ── Column-visibility tokens (required by script.js) ── */
+    --display-subnet:        table-cell;
+    --display-netmask:       table-cell;
+    --display-range:         table-cell;
+    --display-useable:       table-cell;
+    --display-hosts:         table-cell;
     --display-cloudformation: table-cell;
-    --display-terraform: table-cell;
-    --display-comments: table-cell;
-    --display-divide: table-cell;
-    --display-join: table-cell;
+    --display-terraform:     table-cell;
+    --display-comments:      table-cell;
+    --display-divide:        table-cell;
+    --display-join:          table-cell;
 }
 
+/* ── Base reset ─────────────────────────────────────────────── */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ── Body ───────────────────────────────────────────────────── */
+body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+}
+
+/* ── Column-visibility rules (script.js depends on these) ───── */
 .col_subnet {
     display: var(--display-subnet);
 }
@@ -42,70 +88,321 @@
     display: var(--display-join);
 }
 
-H1 {
-    font-family: Arial, Verdana, sans-serif;
-    font-size: 18pt;
+/* ── Typography ─────────────────────────────────────────────── */
+h1 {
+    color: var(--color-accent);
+    font-family: var(--font-sans);
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 4px;
 }
 
-BODY {
-    font-family: Arial, Verdana, sans-serif;
+h2 {
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    border-left: 3px solid var(--color-accent);
+    padding-left: 8px;
 }
 
-P {
-    font-family: Arial, Verdana, sans-serif;
-    font-size: 75%;
+p,
+label {
+    font-size: 0.875rem;
+    color: var(--color-text);
+    line-height: 1.5;
 }
 
-.label {
-    font-family: Arial, Verdana, sans-serif;
-    font-size: 60%;
+/* ── Header ─────────────────────────────────────────────────── */
+header {
+    padding-top: 24px;
+    padding-bottom: 24px;
+    margin-bottom: 8px;
 }
 
+header p {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    margin-top: 4px;
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+footer {
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    padding: 20px;
+    margin-top: 32px;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+footer a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: var(--color-accent);
+}
+
+/* ── Page container ─────────────────────────────────────────── */
+.page-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--padding);
+}
+
+/* ── Card ───────────────────────────────────────────────────── */
+.card {
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    padding: var(--padding);
+    margin-bottom: 24px;
+}
+
+.card h2 {
+    margin-top: 0;
+}
+
+/* ── Responsive: mobile (≤ 767px) ───────────────────────────── */
+@media (max-width: 767px) {
+    .page-container {
+        padding: 0 12px;
+    }
+
+    .card {
+        padding: 14px;
+    }
+
+    /* Stack flex form rows to a single column */
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    form > * {
+        width: 100%;
+    }
+}
+
+/* ── Form inputs ─────────────────────────────────────────────── */
+input[type="text"] {
+    background: var(--color-card);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+}
+
+input[type="text"]:focus {
+    border-color: var(--color-accent);
+    outline: 2px solid var(--color-accent);
+    outline-offset: 1px;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────── */
+input[type="submit"] {
+    background: var(--color-accent);
+    color: #000;
+    border: none;
+    border-radius: 20px;
+    padding: 7px 18px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+input[type="submit"]:hover {
+    background: var(--color-accent-dim);
+}
+
+input[type="button"] {
+    background: var(--color-btn-reset);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    padding: 7px 18px;
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+
+input[type="button"]:hover {
+    border-color: var(--color-accent);
+}
+
+/* ── Column toggle checkbox labels ───────────────────────────── */
+/* Unchecked: adjacent label is dimmed */
+input[type="checkbox"] + label {
+    opacity: 0.45;
+}
+
+/* Checked: adjacent label is fully visible */
+input[type="checkbox"]:checked + label {
+    opacity: 1;
+}
+
+/* ── Calculator table ────────────────────────────────────────── */
+
+/* Table scroll wrapper */
+.table-scroll-wrapper {
+    overflow-x: auto;
+    width: 100%;
+}
+
+/* Table base */
 .calc {
-    font-family: Arial, Verdana, sans-serif;
-    font-size: 80%;
+    width: 100%;
     border-collapse: collapse;
-}
-.calc td {
-    border: 1px solid black;
-}
-
-.calc thead {
-    font-weight: bold;
-    background-color: #eeeeee;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
 }
 
-.calc textarea {
-    height: 1.5em;
+.calc td,
+.calc th {
+    border: 1px solid var(--color-border);
+    padding: 6px 10px;
+    text-align: left;
 }
 
+/* Table header */
+.calc thead td {
+    background: #0a2a2e;
+    color: var(--color-text);
+    font-weight: 600;
+}
+
+.calc thead td:first-child {
+    border-left: 3px solid var(--color-accent);
+}
+
+/* Zebra striping */
+.calc tbody tr:nth-child(even) {
+    background: var(--color-row-even);
+}
+
+.calc tbody tr:nth-child(odd) {
+    background: var(--color-row-odd);
+}
+
+.calc tbody tr:hover {
+    background: var(--color-row-hover);
+}
+
+/* Monospace data cells */
+.calc td.col_subnet,
+.calc td.col_netmask,
+.calc td.col_range,
+.calc td.col_useable {
+    font-family: var(--font-mono);
+}
+
+.calc .col_subnet,
+.calc .col_netmask,
+.calc .col_range,
+.calc .col_useable,
+.calc .col_cloudformation,
+.calc .col_terraform {
+    font-family: var(--font-mono);
+}
+
+/* Action cells */
 .disabledAction {
-    color: #dddddd;
+    opacity: 0.35;
+    cursor: default;
+    color: var(--color-text-muted);
 }
 
 .maskSpan {
-    background-color: #cccccc;
-    text-align: right;
-    font-size: x-small;
-    font-family: monospace;
-    color: black;
-}
-
-.maskSpan div {
-    transform: rotate(90deg);
+    background: var(--color-join-bg);
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    padding: 4px 8px;
     text-align: center;
-    float: right;
 }
 
-.maskSpanRotate {
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
-    background-color: green;
+.maskSpan a {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
 }
 
-.code-block {
-    font-family: Consolas, 'Courier New', monospace;
-    background-color: #f4f4f4;
-    padding: 2px 4px;
+.col_divide a {
+    color: var(--color-accent);
+    text-decoration: none;
+}
+
+.col_divide a:hover {
+    text-decoration: underline;
+}
+
+/* ── Select elements ─────────────────────────────────────────── */
+select {
+    background: var(--color-card);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
     border-radius: 4px;
-    color: #333;
+    padding: 6px 10px;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+}
+
+select:focus {
+    border-color: var(--color-accent);
+    outline: 2px solid var(--color-accent);
+    outline-offset: 1px;
+}
+
+/* ── IaC output textarea ─────────────────────────────────────── */
+#iacOutput {
+    font-family: var(--font-mono);
+    background: var(--color-code-bg);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    min-height: 300px;
+    width: 100%;
+    line-height: 1.6;
+    padding: var(--padding);
+    resize: vertical;
+    font-size: 0.8rem;
+}
+
+/* ── Generate IaC button ─────────────────────────────────────── */
+input[value="Generate IaC"] {
+    background: var(--color-accent);
+    color: #000;
+    border: none;
+    border-radius: 20px;
+    padding: 7px 18px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+input[value="Generate IaC"]:hover {
+    background: var(--color-accent-dim);
+}
+
+/* ── Export panel form layout ────────────────────────────────── */
+.export-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+/* ── Form row utility ────────────────────────────────────────── */
+.form-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
 }
